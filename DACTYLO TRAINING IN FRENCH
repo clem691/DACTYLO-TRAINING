@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entraînement Dactylo</title>
+    <style>
+        /* Application de la transformation d'échelle à 30% à l'élément HTML */
+        html {
+            transform: scale(1.3);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0; /* Couleur de fond plus foncée pour le mode sombre */
+            color: #333; /* Couleur de texte plus foncée pour le mode sombre */
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #333;
+                color: #f0f0f0;
+            }
+        }
+        #text {
+            margin-top: 20px;
+            font-size: 1.6em; /* Taille de police augmentée */
+        }
+        #inputField {
+            margin-top: 20px;
+            font-size: 1.4em; /* Taille de police augmentée */
+            width: 300px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.6em; /* Taille de police augmentée */
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Entraînement Dactylo</h1>
+    <p>Tapez le texte suivant :</p>
+    <div id="text"></div>
+    <input type="text" id="inputField" oninput="checkText()">
+    <div id="result"></div>
+
+    <script>
+        let textElement = document.getElementById('text');
+        let inputElement = document.getElementById('inputField');
+        let resultElement = document.getElementById('result');
+
+        // Tableau de mots français aléatoires pour la pratique du clavier
+        const frenchWords = [
+            'arbre', 'soleil', 'chat', 'maison', 'voiture', 'jardin', 'fleur', 'oiseau', 'montagne', 'rivière',
+            'table', 'chaise', 'ordinateur', 'fenêtre', 'portable', 'bureau', 'carte', 'écran', 'clavier', 'souris',
+            'livre', 'plante', 'route', 'piscine', 'mer', 'lac', 'forêt', 'montre', 'téléphone', 'balcon'
+        ];
+
+        // Fonction pour générer un mot français aléatoire
+        function generateRandomWord() {
+            return frenchWords[Math.floor(Math.random() * frenchWords.length)];
+        }
+
+        // Initialisation avec un mot aléatoire
+        textElement.textContent = generateRandomWord();
+
+        // Fonction pour vérifier le texte tapé par rapport au mot d'origine
+        function checkText() {
+            let typedText = inputElement.value.trim();
+            let originalText = textElement.innerText.trim();
+            if (typedText === originalText) {
+                resultElement.textContent = "Correct!";
+                resultElement.style.color = "green";
+                // Génération d'un nouveau mot aléatoire après la frappe correcte
+                textElement.textContent = ""; // Suppression du mot précédent
+                setTimeout(function() { // Délai pour donner une pause avant l'affichage du nouveau mot
+                    textElement.textContent = generateRandomWord();
+                }, 500);
+                inputElement.value = ""; // Vidage du champ de saisie
+            } else {
+                resultElement.textContent = "Continuez à taper...";
+                resultElement.style.color = "black";
+            }
+        }
+    </script>
+</body>
+</html>
